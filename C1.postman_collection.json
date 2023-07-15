@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "fe6cc8e1-097e-4cbd-9465-645c0c97412c",
+		"name": "C1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26809528"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"response should be okay to process\", function () {\r",
+									"pm.response.to.not.be.error;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response must be valid and have a body\", function () {\r",
+									"\r",
+									"pm.response.to.be.ok;\r",
+									"\r",
+									"pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginaction",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response should be okay to process\", function () {\r",
+									"pm.response.to.not.be.error;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response must be valid and have a body\", function () {\r",
+									"\r",
+									"pm.response.to.be.ok; \r",
+									"\r",
+									"pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/loginaction?email_id={{email_id}}&pwd={{pwd}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"loginaction"
+							],
+							"query": [
+								{
+									"key": "email_id",
+									"value": "{{email_id}}"
+								},
+								{
+									"key": "pwd",
+									"value": "{{pwd}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "home",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const src = cheerio.load(responseBody);\r",
+									"console.log(src( \"select[name='source'] option:nth-child(3)\" ).val());\r",
+									"pm.environment.set(\"src\", src( \"select[name='source'] option:nth-child(3)\" ).val());\r",
+									"\r",
+									"const des = cheerio.load(responseBody);\r",
+									"console.log(des( \"select[name='destination'] option:nth-child(4)\" ).val());\r",
+									"pm.environment.set(\"des\", src( \"select[name='destination'] option:nth-child(4)\" ).val());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/home",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"home"
+							],
+							"query": [
+								{
+									"key": "source",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "destination",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "srcdes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const fid = cheerio.load(responseBody);\r",
+									"console.log(fid( \"a[href^='book']\").attr('href'));\r",
+									"pm.environment.set(\"fid\", fid( \"a[href^='book']\").attr('href'));\r",
+									"\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"response should be okay to process\", function () {\r",
+									"pm.response.to.not.be.error;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response must be valid and have a body\", function () {\r",
+									"\r",
+									"// assert that the status code is 200\r",
+									"\r",
+									"pm.response.to.be.ok; // info, success, redirection, clientError, serverError, are other variants\r",
+									"\r",
+									"// assert that the response has a valid JSON body\r",
+									"\r",
+									"pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}?source={{src}}&destination={{des}}",
+							"host": [
+								"{{url}}"
+							],
+							"query": [
+								{
+									"key": "source",
+									"value": "{{src}}"
+								},
+								{
+									"key": "destination",
+									"value": "{{des}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bookflight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response should be okay to process\", function () {\r",
+									"pm.response.to.not.be.error;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response must be valid and have a body\", function () {\r",
+									"\r",
+									"// assert that the status code is 200\r",
+									"\r",
+									"pm.response.to.be.ok; // info, success, redirection, clientError, serverError, are other variants\r",
+									"\r",
+									"// assert that the response has a valid JSON body\r",
+									"\r",
+									"pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{fid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{fid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "completebooking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"response should be okay to process\", function () {\r",
+									"pm.response.to.not.be.error;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response must be valid and have a body\", function () {\r",
+									"\r",
+									"// assert that the status code is 200\r",
+									"\r",
+									"pm.response.to.be.ok; // info, success, redirection, clientError, serverError, are other variants\r",
+									"\r",
+									"pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/completepurchase",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"completepurchase"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
